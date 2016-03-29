@@ -17,9 +17,12 @@ public class Main {
                 e.printStackTrace();
             }
             if (text != null && text.length() != 0) {
-                Interpreter interpreter = new Interpreter(text);
-                int result = interpreter.calcExpr();
-                System.out.println(result);
+                Lexer lexer = new Lexer(text);
+                Parser parser = new Parser(lexer);
+                parser.parse();
+//                Interpreter interpreter = new Interpreter(text);
+//                int result = interpreter.calcExpr();
+//                System.out.println(result);
             }
         }
     }
