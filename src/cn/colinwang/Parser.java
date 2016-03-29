@@ -18,26 +18,28 @@ public class Parser {
         throw new SyntaxException();
     }
 
-    private void expression() {
-        this.factor();
-        while (currentToken.getType() == TokenTypes.PLUS ||
-                currentToken.getType() == TokenTypes.MINUS ||
-                currentToken.getType() == TokenTypes.MUL ||
-                currentToken.getType() == TokenTypes.DIV) {
+    private void expr() {
+        this.term();
+        while (currentToken.getType() == TokenTypes.PLUS || currentToken.getType() == TokenTypes.MINUS) {
             if (currentToken.getType() == TokenTypes.PLUS) {
                 this.walk(TokenTypes.PLUS);
-                this.factor();
+                this.term();
             } else if (currentToken.getType() == TokenTypes.MINUS) {
                 this.walk(TokenTypes.MINUS);
-                this.factor();
-            } else if (currentToken.getType() == TokenTypes.MUL) {
+                this.term();
+            }
+        }
+    }
+
+    private void term() {
+        this.factor();
+        while (currentToken.getType() == TokenTypes.MUL || currentToken.getType() == TokenTypes.DIV) {
+            if (currentToken.getType() == TokenTypes.MUL) {
                 this.walk(TokenTypes.MUL);
                 this.factor();
             } else if (currentToken.getType() == TokenTypes.DIV) {
                 this.walk(TokenTypes.DIV);
                 this.factor();
-            } else {
-                this.error();
             }
         }
     }
@@ -55,6 +57,6 @@ public class Parser {
     }
 
     public void parse() {
-        this.expression();
+        this.expr();
     }
 }
