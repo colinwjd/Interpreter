@@ -3,6 +3,7 @@ package cn.colinwang;
 import cn.colinwang.exception.LexicalException;
 
 /**
+ * 词法分析器
  * Created by colin on 3/29/16.
  */
 public class Lexer {

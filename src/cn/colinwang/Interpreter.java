@@ -3,6 +3,7 @@ package cn.colinwang;
 import cn.colinwang.exception.SyntaxException;
 
 /**
+ * 解释器
  * Created by colin on 3/25/16.
  */
 public class Interpreter {

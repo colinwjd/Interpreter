@@ -1,6 +1,7 @@
 package cn.colinwang;
 
 /**
+ * 关键字
  * Created by colin on 3/25/16.
  */
 public class Token<T> {

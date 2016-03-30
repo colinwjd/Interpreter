@@ -3,6 +3,7 @@ package cn.colinwang;
 import cn.colinwang.exception.SyntaxException;
 
 /**
+ * 语法分析器
  * Created by colin on 3/29/16.
  */
 public class Parser {
@@ -45,7 +46,13 @@ public class Parser {
     }
 
     private void factor() {
-        this.walk(TokenTypes.INTEGER);
+        if (currentToken.getType() == TokenTypes.INTEGER) {
+            this.walk(TokenTypes.INTEGER);
+        } else if (currentToken.getType() == TokenTypes.LPAREN) {
+            this.walk(TokenTypes.LPAREN);
+            this.expr();
+            this.walk(TokenTypes.RPAREN);
+        }
     }
 
     private void walk(TokenTypes tokenTypes) {
