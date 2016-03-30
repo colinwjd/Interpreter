@@ -50,8 +50,17 @@ public class Interpreter {
 
     private int factor() {
         Token token = currentToken;
-        this.walk(TokenTypes.INTEGER);
-        return (int) token.getValue();
+        if (token.getType() == TokenTypes.INTEGER) {
+            this.walk(TokenTypes.INTEGER);
+            return (int) token.getValue();
+        } else if (token.getType() == TokenTypes.LPAREN) {
+            this.walk(TokenTypes.LPAREN);
+            int result = this.expr();
+            this.walk(TokenTypes.RPAREN);
+            return result;
+        } else {
+            throw new SyntaxException();
+        }
     }
 
     private void walk(TokenTypes type) {
