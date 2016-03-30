@@ -25,28 +25,30 @@ public class Lexer {
             if (Character.isSpaceChar(currentChar)) {
                 this.skipWhiteSpace();
                 continue;
-            }
-            if (Character.isDigit(currentChar)) {
+            } else if (Character.isDigit(currentChar)) {
                 int number = this.number();
                 return new Token<>(TokenTypes.INTEGER, number);
-            }
-            if (currentChar.equals('+')) {
+            } else if (currentChar.equals('+')) {
                 this.advance();
                 return new Token<>(TokenTypes.PLUS, '+');
-            }
-            if (currentChar.equals('-')) {
+            } else if (currentChar.equals('-')) {
                 this.advance();
                 return new Token<>(TokenTypes.MINUS, '-');
-            }
-            if (currentChar.equals('*')) {
+            } else if (currentChar.equals('*')) {
                 this.advance();
                 return new Token<>(TokenTypes.MUL, '*');
-            }
-            if (currentChar.equals('/')) {
+            } else if (currentChar.equals('/')) {
                 this.advance();
                 return new Token<>(TokenTypes.DIV, '/');
+            } else if (currentChar.equals('(')) {
+                this.advance();
+                return new Token<>(TokenTypes.LPAREN, '(');
+            } else if (currentChar.equals(')')) {
+                this.advance();
+                return new Token<>(TokenTypes.RPAREN, ')');
+            } else {
+                this.error();
             }
-            this.error();
         }
         return new Token<>(TokenTypes.EOF, null);
     }
