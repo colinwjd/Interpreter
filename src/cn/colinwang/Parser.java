@@ -1,9 +1,14 @@
 package cn.colinwang;
 
 import cn.colinwang.exception.SyntaxException;
+import cn.colinwang.syntax.AbstractSyntaxTree;
+import cn.colinwang.syntax.BinaryOperator;
+import cn.colinwang.syntax.Number;
+import cn.colinwang.syntax.UnaryOperator;
 
 /**
- * 语法分析器
+ * Parser for constructing an abstract syntax tree.
+ * If something was wrong, it should throw syntax exception.
  * Created by colin on 3/29/16.
  */
 public class Parser {
@@ -15,55 +20,76 @@ public class Parser {
         currentToken = this.lexer.getNextToken();
     }
 
-    private void error() {
-        throw new SyntaxException();
-    }
-
-    private void expr() {
-        this.term();
-        while (currentToken.getType() == TokenTypes.PLUS || currentToken.getType() == TokenTypes.MINUS) {
-            if (currentToken.getType() == TokenTypes.PLUS) {
+    /**
+     * expr: term ((PLUS | MINUS) term)*
+     * term: factor ((MUL | DIV) factor)*
+     * factor: (PLUS | MINUS) factor | INTEGER | LPAREN expr RPAREN
+     */
+    private AbstractSyntaxTree expr() {
+        Token token = currentToken;
+        AbstractSyntaxTree node = this.term();
+        while (token.getType() == TokenTypes.PLUS || token.getType() == TokenTypes.MINUS) {
+            if (token.getType() == TokenTypes.PLUS) {
                 this.walk(TokenTypes.PLUS);
-                this.term();
-            } else if (currentToken.getType() == TokenTypes.MINUS) {
+                return new BinaryOperator(node, token, this.term());
+            } else if (token.getType() == TokenTypes.MINUS) {
                 this.walk(TokenTypes.MINUS);
-                this.term();
+                return new BinaryOperator(node, token, this.term());
             }
         }
+        return node;
     }
 
-    private void term() {
-        this.factor();
-        while (currentToken.getType() == TokenTypes.MUL || currentToken.getType() == TokenTypes.DIV) {
-            if (currentToken.getType() == TokenTypes.MUL) {
+    /**
+     * term: factor ((MUL | DIV) factor)*
+     */
+    private AbstractSyntaxTree term() {
+        Token token = currentToken;
+        AbstractSyntaxTree node = this.factor();
+        while (token.getType() == TokenTypes.MUL || token.getType() == TokenTypes.DIV) {
+            if (token.getType() == TokenTypes.MUL) {
                 this.walk(TokenTypes.MUL);
-                this.factor();
+                return new BinaryOperator(node, token, this.factor());
             } else if (currentToken.getType() == TokenTypes.DIV) {
                 this.walk(TokenTypes.DIV);
-                this.factor();
+                return new BinaryOperator(node, token, this.factor());
             }
         }
+        return node;
     }
 
-    private void factor() {
-        if (currentToken.getType() == TokenTypes.INTEGER) {
+    /**
+     * factor: (PLUS | MINUS) factor | INTEGER | LPAREN expr RPAREN
+     */
+    private AbstractSyntaxTree factor() {
+        Token token = currentToken;
+        if (token.getType() == TokenTypes.PLUS) {
+            this.walk(TokenTypes.PLUS);
+            return new UnaryOperator(token, this.factor());
+        } else if (token.getType() == TokenTypes.MINUS) {
+            this.walk(TokenTypes.MINUS);
+            return new UnaryOperator(token, this.factor());
+        } else if (token.getType() == TokenTypes.INTEGER) {
             this.walk(TokenTypes.INTEGER);
-        } else if (currentToken.getType() == TokenTypes.LPAREN) {
+            return new Number(token);
+        } else if (token.getType() == TokenTypes.LPAREN) {
             this.walk(TokenTypes.LPAREN);
-            this.expr();
+            AbstractSyntaxTree node =  this.expr();
             this.walk(TokenTypes.RPAREN);
+            return node;
         }
+        throw new SyntaxException();
     }
 
     private void walk(TokenTypes tokenTypes) {
         if (currentToken.getType() == tokenTypes) {
             currentToken = lexer.getNextToken();
         } else {
-            this.error();
+            throw new SyntaxException();
         }
     }
 
-    public void parse() {
-        this.expr();
+    public AbstractSyntaxTree parse() {
+        return this.expr();
     }
 }
