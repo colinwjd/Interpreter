@@ -17,4 +17,9 @@ public class Number extends AbstractSyntaxTree {
     public int getValue() {
         return this.value;
     }
+
+    @Override
+    public int visit() {
+        return value;
+    }
 }

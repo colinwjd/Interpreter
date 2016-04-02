@@ -2,6 +2,7 @@ package cn.colinwang.syntax;
 
 import cn.colinwang.Token;
 import cn.colinwang.TokenTypes;
+import cn.colinwang.exception.InterpretException;
 
 /**
  * Created by colin on 4/1/16.
@@ -27,5 +28,20 @@ public class BinaryOperator extends AbstractSyntaxTree {
 
     public TokenTypes getOperator() {
         return this.operator.getType();
+    }
+
+    @Override
+    public int visit() {
+        TokenTypes operate = operator.getType();
+        if (operate == TokenTypes.PLUS) {
+            return left.visit() + right.visit();
+        } else if (operate == TokenTypes.MINUS) {
+            return left.visit() - right.visit();
+        } else if (operate == TokenTypes.MUL) {
+            return  left.visit() * right.visit();
+        } else if (operate == TokenTypes.DIV) {
+            return left.visit() / right.visit();
+        }
+        throw new InterpretException();
     }
 }
