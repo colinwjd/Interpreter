@@ -26,16 +26,15 @@ public class Parser {
      * factor: (PLUS | MINUS) factor | INTEGER | LPAREN expr RPAREN
      */
     private AbstractSyntaxTree expr() {
-        Token token = currentToken;
         AbstractSyntaxTree node = this.term();
-        while (token.getType() == TokenTypes.PLUS || token.getType() == TokenTypes.MINUS) {
+        while (currentToken.getType() == TokenTypes.PLUS || currentToken.getType() == TokenTypes.MINUS) {
+            Token token = currentToken;
             if (token.getType() == TokenTypes.PLUS) {
                 this.walk(TokenTypes.PLUS);
-                return new BinaryOperator(node, token, this.term());
             } else if (token.getType() == TokenTypes.MINUS) {
                 this.walk(TokenTypes.MINUS);
-                return new BinaryOperator(node, token, this.term());
             }
+            node = new BinaryOperator(node, token, this.term());
         }
         return node;
     }
@@ -44,16 +43,15 @@ public class Parser {
      * term: factor ((MUL | DIV) factor)*
      */
     private AbstractSyntaxTree term() {
-        Token token = currentToken;
         AbstractSyntaxTree node = this.factor();
-        while (token.getType() == TokenTypes.MUL || token.getType() == TokenTypes.DIV) {
+        while (currentToken.getType() == TokenTypes.MUL || currentToken.getType() == TokenTypes.DIV) {
+            Token token = currentToken;
             if (token.getType() == TokenTypes.MUL) {
                 this.walk(TokenTypes.MUL);
-                return new BinaryOperator(node, token, this.factor());
-            } else if (currentToken.getType() == TokenTypes.DIV) {
+            } else if (token.getType() == TokenTypes.DIV) {
                 this.walk(TokenTypes.DIV);
-                return new BinaryOperator(node, token, this.factor());
             }
+            node = new BinaryOperator(node, token, this.factor());
         }
         return node;
     }
