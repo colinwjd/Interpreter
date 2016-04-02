@@ -8,7 +8,7 @@ import cn.colinwang.syntax.UnaryOperator;
 
 /**
  * Parser for constructing an abstract syntax tree.
- * If something was wrong, it should throw syntax exception.
+ * If something was wrong, it should throw a syntax exception.
  * Created by colin on 3/29/16.
  */
 public class Parser {

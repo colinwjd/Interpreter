@@ -1,7 +1,7 @@
 package cn.colinwang;
 
 /**
- * 关键字
+ * Token used by parser to construct an Abstract Syntax Tree.
  * Created by colin on 3/25/16.
  */
 public class Token<T> {

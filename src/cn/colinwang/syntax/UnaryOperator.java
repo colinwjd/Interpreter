@@ -5,6 +5,7 @@ import cn.colinwang.TokenTypes;
 import cn.colinwang.exception.InterpretException;
 
 /**
+ * Unary operator node of an Abstract Syntax Tree.
  * Created by colin on 4/1/16.
  */
 public class UnaryOperator extends AbstractSyntaxTree {
@@ -14,14 +15,6 @@ public class UnaryOperator extends AbstractSyntaxTree {
     public UnaryOperator(Token operator, AbstractSyntaxTree right) {
         this.operator = operator;
         this.right = right;
-    }
-
-    public AbstractSyntaxTree getRight() {
-        return this.right;
-    }
-
-    public TokenTypes getOperator() {
-        return this.operator.getType();
     }
 
     @Override

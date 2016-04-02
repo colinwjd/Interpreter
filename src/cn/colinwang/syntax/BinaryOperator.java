@@ -5,6 +5,7 @@ import cn.colinwang.TokenTypes;
 import cn.colinwang.exception.InterpretException;
 
 /**
+ * Binary operator node of an Abstract Syntax Tree.
  * Created by colin on 4/1/16.
  */
 public class BinaryOperator extends AbstractSyntaxTree {
@@ -16,18 +17,6 @@ public class BinaryOperator extends AbstractSyntaxTree {
         this.left = left;
         this.operator = operator;
         this.right = right;
-    }
-
-    public AbstractSyntaxTree getLeft() {
-        return this.left;
-    }
-
-    public AbstractSyntaxTree getRight() {
-        return this.right;
-    }
-
-    public TokenTypes getOperator() {
-        return this.operator.getType();
     }
 
     @Override

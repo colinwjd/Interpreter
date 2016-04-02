@@ -1,6 +1,7 @@
 package cn.colinwang.exception;
 
 /**
+ * Base exception class for the interpreter.
  * Created by colin on 3/29/16.
  */
 public class InterpretException extends RuntimeException {
@@ -10,7 +11,7 @@ public class InterpretException extends RuntimeException {
      * initialized by a call to {@link #initCause}.
      */
     public InterpretException() {
-        super("Interpret Error.");
+        super("An error occurred during interpreting.");
     }
 
     /**

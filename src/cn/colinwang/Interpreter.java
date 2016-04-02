@@ -1,10 +1,9 @@
 package cn.colinwang;
 
-import cn.colinwang.exception.SyntaxException;
 import cn.colinwang.syntax.AbstractSyntaxTree;
 
 /**
- * 解释器
+ * An interpreter that interpret the Abstract Syntax Tree.
  * Created by colin on 3/25/16.
  */
 public class Interpreter {

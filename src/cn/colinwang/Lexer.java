@@ -3,7 +3,8 @@ package cn.colinwang;
 import cn.colinwang.exception.LexicalException;
 
 /**
- * 词法分析器
+ * A lexer make the input text into tokens.
+ * If there are characters not allowed, it should throw a lexical exception.
  * Created by colin on 3/29/16.
  */
 public class Lexer {
@@ -17,15 +18,10 @@ public class Lexer {
         currentChar = this.text[index];
     }
 
-    private void error() {
-        throw new LexicalException();
-    }
-
     public Token getNextToken() {
         while (currentChar != null) {
             if (Character.isSpaceChar(currentChar)) {
                 this.skipWhiteSpace();
-                continue;
             } else if (Character.isDigit(currentChar)) {
                 int number = this.number();
                 return new Token<>(TokenTypes.INTEGER, number);
@@ -48,7 +44,7 @@ public class Lexer {
                 this.advance();
                 return new Token<>(TokenTypes.RPAREN, ')');
             } else {
-                this.error();
+                throw new LexicalException();
             }
         }
         return new Token<>(TokenTypes.EOF, null);
@@ -70,7 +66,7 @@ public class Lexer {
     }
 
     private int number() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         while (currentChar != null && Character.isDigit(currentChar)) {
             result.append(currentChar);
             this.advance();

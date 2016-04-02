@@ -1,7 +1,7 @@
 package cn.colinwang;
 
 /**
- * 关键字类型
+ * Allowed token types.
  * Created by colin on 3/25/16.
  */
 public enum TokenTypes {
