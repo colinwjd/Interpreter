@@ -9,9 +9,9 @@ import cn.colinwang.exception.InterpretException;
  * Created by colin on 4/1/16.
  */
 public class BinaryOperator extends AbstractSyntaxTree {
-    private AbstractSyntaxTree left;
-    private Token operator;
-    private AbstractSyntaxTree right;
+    private final AbstractSyntaxTree left;
+    private final Token operator;
+    private final AbstractSyntaxTree right;
 
     public BinaryOperator(AbstractSyntaxTree left, Token operator, AbstractSyntaxTree right) {
         this.left = left;
@@ -27,7 +27,7 @@ public class BinaryOperator extends AbstractSyntaxTree {
         } else if (operate == TokenTypes.MINUS) {
             return left.visit() - right.visit();
         } else if (operate == TokenTypes.MUL) {
-            return  left.visit() * right.visit();
+            return left.visit() * right.visit();
         } else if (operate == TokenTypes.DIV) {
             return left.visit() / right.visit();
         }

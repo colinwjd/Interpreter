@@ -8,7 +8,7 @@ import cn.colinwang.exception.LexicalException;
  * Created by colin on 3/29/16.
  */
 public class Lexer {
-    private char[] text;
+    private final char[] text;
     private int index;
     private Character currentChar;
 

@@ -7,7 +7,7 @@ import cn.colinwang.Token;
  * Created by colin on 4/1/16.
  */
 public class Number extends AbstractSyntaxTree {
-    private int value;
+    private final int value;
 
     public Number(Token token) {
         this.value = (int) token.getValue();

@@ -9,7 +9,7 @@ import cn.colinwang.syntax.UnaryOperator;
 /**
  * Parser for constructing an abstract syntax tree.
  * If something was wrong, it should throw a syntax exception.
- *
+ * <p>
  * The parser is a recursive-descent parser.
  * It uses a set of recursive procedures to process the input.
  * It begins by constructing the top node of the parse tree,
@@ -17,7 +17,7 @@ import cn.colinwang.syntax.UnaryOperator;
  * Created by colin on 3/29/16.
  */
 public class Parser {
-    private Lexer lexer;
+    private final Lexer lexer;
     private Token currentToken;
 
     public Parser(Lexer lexer) {
@@ -77,7 +77,7 @@ public class Parser {
             return new Number(token);
         } else if (token.getType() == TokenTypes.LPAREN) {
             this.walk(TokenTypes.LPAREN);
-            AbstractSyntaxTree node =  this.expr();
+            AbstractSyntaxTree node = this.expr();
             this.walk(TokenTypes.RPAREN);
             return node;
         }

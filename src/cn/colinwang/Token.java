@@ -5,8 +5,8 @@ package cn.colinwang;
  * Created by colin on 3/25/16.
  */
 public class Token<T> {
-    private TokenTypes type;
-    private T value;
+    private final TokenTypes type;
+    private final T value;
 
     public Token(TokenTypes type, T value) {
         this.type = type;

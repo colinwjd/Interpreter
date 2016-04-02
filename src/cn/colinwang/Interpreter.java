@@ -8,7 +8,7 @@ import cn.colinwang.syntax.AbstractSyntaxTree;
  */
 public class Interpreter {
 
-    private Parser parser;
+    private final Parser parser;
 
     public Interpreter(Parser parser) {
         this.parser = parser;

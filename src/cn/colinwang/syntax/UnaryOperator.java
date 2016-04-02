@@ -9,8 +9,8 @@ import cn.colinwang.exception.InterpretException;
  * Created by colin on 4/1/16.
  */
 public class UnaryOperator extends AbstractSyntaxTree {
-    private Token operator;
-    private AbstractSyntaxTree right;
+    private final Token operator;
+    private final AbstractSyntaxTree right;
 
     public UnaryOperator(Token operator, AbstractSyntaxTree right) {
         this.operator = operator;
