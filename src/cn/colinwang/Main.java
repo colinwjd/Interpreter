@@ -18,11 +18,9 @@ public class Main {
             }
             if (text != null && text.length() != 0) {
                 Lexer lexer = new Lexer(text);
-//                Parser parser = new Parser(lexer);
-//                parser.parse();
-
-                Interpreter interpreter = new Interpreter(lexer);
-                int result = interpreter.getResult();
+                Parser parser = new Parser(lexer);
+                Interpreter interpreter = new Interpreter(parser);
+                int result = interpreter.interpret();
                 System.out.println(result);
             }
         }

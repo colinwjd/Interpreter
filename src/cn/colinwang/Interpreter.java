@@ -1,75 +1,23 @@
 package cn.colinwang;
 
 import cn.colinwang.exception.SyntaxException;
+import cn.colinwang.syntax.AbstractSyntaxTree;
 
 /**
  * 解释器
  * Created by colin on 3/25/16.
  */
 public class Interpreter {
-    private Lexer lexer;
-    private Token currentToken;
 
-    public Interpreter(Lexer lexer) {
-        this.lexer = lexer;
-        this.currentToken = lexer.getNextToken();
+    private Parser parser;
+
+    public Interpreter(Parser parser) {
+        this.parser = parser;
     }
 
-    public int getResult() {
-        return this.expr();
+    public int interpret() {
+        AbstractSyntaxTree syntaxTree = this.parser.parse();
+        return syntaxTree.visit();
     }
 
-    private int expr() {
-        int result = this.term();
-        while (currentToken.getType() == TokenTypes.PLUS || currentToken.getType() == TokenTypes.MINUS) {
-            if (currentToken.getType() == TokenTypes.PLUS) {
-                this.walk(TokenTypes.PLUS);
-                result += this.term();
-            } else if (currentToken.getType() == TokenTypes.MINUS) {
-                this.walk(TokenTypes.MINUS);
-                result -= this.term();
-            }
-        }
-        return result;
-    }
-
-    private int term() {
-        int result = this.factor();
-        while (currentToken.getType() == TokenTypes.MUL ||
-                currentToken.getType() == TokenTypes.DIV) {
-            if (currentToken.getType() == TokenTypes.MUL) {
-                this.walk(TokenTypes.MUL);
-                result *= this.factor();
-            }
-            if (currentToken.getType() == TokenTypes.DIV) {
-                this.walk(TokenTypes.DIV);
-                result /= this.factor();
-            }
-        }
-        return result;
-    }
-
-    private int factor() {
-        Token token = currentToken;
-        if (token.getType() == TokenTypes.INTEGER) {
-            this.walk(TokenTypes.INTEGER);
-            return (int) token.getValue();
-        } else if (token.getType() == TokenTypes.LPAREN) {
-            this.walk(TokenTypes.LPAREN);
-            int result = this.expr();
-            this.walk(TokenTypes.RPAREN);
-            return result;
-        } else {
-            throw new SyntaxException();
-        }
-    }
-
-    private void walk(TokenTypes type) {
-        Token token = this.currentToken;
-        if (token.getType() == type) {
-            currentToken = lexer.getNextToken();
-        } else {
-            throw new SyntaxException();
-        }
-    }
 }
