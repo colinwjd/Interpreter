@@ -9,6 +9,11 @@ import cn.colinwang.syntax.UnaryOperator;
 /**
  * Parser for constructing an abstract syntax tree.
  * If something was wrong, it should throw a syntax exception.
+ *
+ * The parser is a recursive-descent parser.
+ * It uses a set of recursive procedures to process the input.
+ * It begins by constructing the top node of the parse tree,
+ * and then gradually constructs lower nodes.
  * Created by colin on 3/29/16.
  */
 public class Parser {
